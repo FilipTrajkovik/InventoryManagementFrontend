@@ -1,0 +1,10 @@
+<form [formGroup]="productForm">
+  <input type="text" formControlName="name"/>
+  <div class="text-danger" *ngIf="productForm.get('name')?.hasError('required')">This field is required</div>
+  <input type="text" formControlName="description"/>
+  <input type="number" formControlName="price"/>
+  <input type="number" formControlName="quantityInStock"/>
+  <input type="text" formControlName="category"/>
+
+  <button type="submit" (click)="submitForm()">Submit</button>
+</form>

@@ -10,7 +10,7 @@ import {HttpErrorResponse} from '@angular/common/module.d-CnjH8Dlt';
   standalone: false
 })
 export class ProductListComponent implements OnInit{
-  tableColumnList: string[] = ['#', 'Name', 'Description', 'Price', 'Quantity', 'Category'];
+  tableColumnList: string[] = ['#', 'Name', 'Price', 'Category'];
   products: Product[] = [];
 
   constructor(private productService: ProductService) {

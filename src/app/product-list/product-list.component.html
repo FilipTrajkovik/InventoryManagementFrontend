@@ -5,13 +5,11 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let product of products">
+  <tr *ngFor="let product of products" routerLink="/product-details/{{product.id}}">
     <th scope="row">{{ product.id }}</th>
     <td>{{ product.name }}</td>
-    <td>{{ product.description || 'N/A' }}</td>
     <td>{{ product.price }}</td>
-    <td>{{ product.quantityInStock }}</td>
-    <td>{{ product.category || 'N/A'}}</td>
+    <td>{{ product.category || 'N/A' }}</td>
   </tr>
   </tbody>
 </table>

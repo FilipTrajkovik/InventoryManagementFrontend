@@ -12,7 +12,10 @@ This is a full-stack inventory management application built with:
 - IntelliJ IDEA (or any preferred IDE)
  
 ## Running the App
-- Open the project in IntelliJ IDEA (or any preferred IDE) and run the following command in the command line
+- Open the project in IntelliJ IDEA (or any preferred IDE) and run the following commands in the command line
+```bash
+npm install
+```
 ```bash
 ng serve
 ```

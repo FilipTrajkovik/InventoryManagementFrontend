@@ -11,8 +11,15 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  public getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiServerUrl}/products`)
+  public getAllProducts(formValues: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiServerUrl}/products`, {
+      params: {
+        name: formValues.name,
+        priceFrom: formValues.priceFrom,
+        priceTo: formValues.priceTo,
+        categoryId: formValues.categoryId
+      }
+    })
   }
 
   public getProduct(id: number): Observable<Product> {

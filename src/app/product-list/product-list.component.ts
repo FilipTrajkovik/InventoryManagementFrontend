@@ -5,6 +5,9 @@ import {HttpErrorResponse} from '@angular/common/module.d-CnjH8Dlt';
 import {Router} from '@angular/router';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Category} from '../model/category';
+import {CategoryService} from '../service/category.service';
 
 @Component({
   selector: "app-product-list",
@@ -12,17 +15,36 @@ import {MatPaginator} from '@angular/material/paginator';
   styleUrls: ["./product-list.component.css"],
   standalone: false
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'price', 'category', 'details', 'edit', 'delete'];
   products: Product[] = [];
   dataSource = new MatTableDataSource<Product>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  formValues!: FormGroup;
+  categories: Category[] = [];
 
-  constructor(private productService: ProductService, private route: Router) {
+  constructor(private productService: ProductService,
+              private route: Router,
+              private fb: FormBuilder,
+              private categoryService: CategoryService) {
   }
 
   ngOnInit(): void {
-    this.productService.getAllProducts().subscribe(
+    this.getCategories();
+    this.initFilterFormValues();
+    this.getProducts();
+  }
+
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe({
+      next: value => {
+        this.categories = value;
+      }
+    })
+  }
+
+  getProducts(): void {
+    this.productService.getAllProducts(this.formValues.getRawValue()).subscribe(
       (productList: Product[]) => {
         this.products = productList;
         this.dataSource = new MatTableDataSource<Product>(productList);
@@ -32,6 +54,15 @@ export class ProductListComponent implements OnInit{
         alert(error.message);
       }
     );
+  }
+
+  initFilterFormValues(): void {
+    this.formValues = this.fb.group({
+      name: [""],
+      priceFrom: [0],
+      priceTo: [99999],
+      categoryId: [-1],
+    })
   }
 
   addProduct() {

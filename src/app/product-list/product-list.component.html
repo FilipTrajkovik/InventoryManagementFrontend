@@ -7,6 +7,38 @@
     <button class="btn btn-primary mb-3 rounded" (click)="addProduct()">Add product</button>
   </div>
 
+  <div>
+    <form [formGroup]="formValues">
+      <div class="row">
+        <mat-form-field class="col">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name"/>
+        </mat-form-field>
+
+        <mat-form-field class="col">
+          <mat-label>Price from</mat-label>
+          <input matInput type="text" formControlName="priceFrom"/>
+        </mat-form-field>
+
+        <mat-form-field class="col">
+          <mat-label>Price to</mat-label>
+          <input matInput type="text" formControlName="priceTo"/>
+        </mat-form-field>
+
+        <mat-form-field class="col">
+          <mat-label>Select category</mat-label>
+          <mat-select formControlName="categoryId">
+            <mat-option *ngFor="let category of categories;" [value]="category.id">
+              {{ category.categoryName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button class="btn btn-primary mb-3 rounded col" type="button" (click)="getProducts()">Filter products</button>
+      </div>
+    </form>
+  </div>
+
   <table mat-table [dataSource]="dataSource" class="mat-table">
 
     <ng-container matColumnDef="id">

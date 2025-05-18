@@ -13,6 +13,8 @@ import {MatFormField, MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTable, MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -33,7 +35,10 @@ import {MatButtonModule} from '@angular/material/button';
     MatSelectModule,
     RouterModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
   ],
   providers: [],
   exports: [],

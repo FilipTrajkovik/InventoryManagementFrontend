@@ -57,7 +57,7 @@ export class ProductFormComponent implements OnInit {
       description: [""],
       price: [0, [Validators.required, Validators.min(0)]],
       quantityInStock: [0, [Validators.required, Validators.min(0)]],
-      category: [""],
+      category: [0],
     })
   }
 

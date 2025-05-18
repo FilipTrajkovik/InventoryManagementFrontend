@@ -82,9 +82,10 @@ export class ProductFormComponent implements OnInit {
 
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          alert("Error saving product changes");
         },
         () => {
+          alert("Successfully saved product changes");
           this.router.navigate(['/products']);
         }
       )
@@ -94,9 +95,10 @@ export class ProductFormComponent implements OnInit {
 
           },
           (error: HttpErrorResponse) => {
-            alert(error.message);
+            alert("Error adding product");
           },
           () => {
+            alert("Successfully added product");
             this.router.navigate(['/products']);
           }
         );

@@ -50,7 +50,11 @@ export class ProductListComponent implements OnInit{
     this.productService.deleteProduct(id).subscribe(
       {
         error: err => {
-          alert(err.message());
+          alert("There was an error deleting product with id " + id);
+        },
+        complete: () => {
+          alert("Product deleted successfully");
+          window.location.reload();
         }
       }
     )

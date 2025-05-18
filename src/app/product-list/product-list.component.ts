@@ -34,6 +34,10 @@ export class ProductListComponent implements OnInit{
     );
   }
 
+  addProduct() {
+    this.route.navigate([`/product-add`]);
+  }
+
   editProduct(id: number) {
     this.route.navigate([`/product-edit/${id}`]);
   }

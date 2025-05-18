@@ -3,6 +3,10 @@
 </div>
 
 <div class="container mt-5 mat-elevation-z8">
+  <div>
+    <button class="btn btn-primary mb-3 rounded" (click)="addProduct()">Add product</button>
+  </div>
+
   <table mat-table [dataSource]="dataSource" class="mat-table">
 
     <ng-container matColumnDef="id">

@@ -8,13 +8,14 @@ import {Product} from '../model/product';
 export class ProductService {
   private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {
+  }
 
   public getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiServerUrl}/products`)
   }
 
-  public getProduct(id: number): Observable<Product>{
+  public getProduct(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.apiServerUrl}/products/${id}`)
   }
 
@@ -22,6 +23,13 @@ export class ProductService {
     return this.http.post<Product>(`${this.apiServerUrl}/products`, product)
   }
 
+  public editProduct(id: number, product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.apiServerUrl}/products/${id}`, product)
+  }
+
+  public deleteProduct(id: number): Observable<any> {
+    return this.http.delete(`${this.apiServerUrl}/products/${id}`)
+  }
 }
 
 

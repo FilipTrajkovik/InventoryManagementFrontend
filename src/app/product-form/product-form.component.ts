@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../service/product.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/module.d-CnjH8Dlt';
+import {Product} from '../model/product';
+import {CategoryService} from '../service/category.service';
+import {Category} from '../model/category';
 
 @Component({
   selector: "app-product-form",
@@ -12,13 +15,40 @@ import {HttpErrorResponse} from '@angular/common/module.d-CnjH8Dlt';
 })
 export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
+  categories: Category[] = [];
 
-  constructor(private productService: ProductService, private fb: FormBuilder, private router: Router) {
+  constructor(private productService: ProductService,
+              private categoryService: CategoryService,
+              private fb: FormBuilder,
+              private router: Router,
+              private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    this.initForm();
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.getCategories();
+
+    if (id !== null && id !== undefined && id !== 0){
+      this.productService.getProduct(id).subscribe(
+        (product: Product) => {
+          this.patchForm(product);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message)
+        }
+      );
+    } else {
+      this.initForm();
+    }
+  }
+
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe({
+      next: value => {
+        this.categories = value;
+      }
+    })
   }
 
   initForm(): void {
@@ -31,12 +61,23 @@ export class ProductFormComponent implements OnInit {
     })
   }
 
+  patchForm(product: Product): void {
+    this.productForm = this.fb.group({
+      name: [product.name, Validators.required],
+      description: [product.description],
+      price: [product.price, [Validators.required, Validators.min(0)]],
+      quantityInStock: [product.quantityInStock, [Validators.required, Validators.min(0)]],
+      category: [product.category.id],
+    })
+  }
+
   submitForm(): void {
-    console.log(this.productForm.getRawValue())
     let productToAdd = this.productForm.getRawValue();
 
     if (this.productForm.valid) {
-      this.productService.addProduct(productToAdd).subscribe(
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+      if (id) {
+        this.productService.editProduct(id, productToAdd).subscribe(
         () => {
 
         },
@@ -46,7 +87,20 @@ export class ProductFormComponent implements OnInit {
         () => {
           this.router.navigate(['/products']);
         }
-      );
+      )
+    } else {
+        this.productService.addProduct(productToAdd).subscribe(
+          () => {
+
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          },
+          () => {
+            this.router.navigate(['/products']);
+          }
+        );
+      }
     }
   }
 }

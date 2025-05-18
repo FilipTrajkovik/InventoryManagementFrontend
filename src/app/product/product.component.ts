@@ -3,6 +3,7 @@ import {ProductService} from '../service/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {Product} from '../model/product';
 import {HttpErrorResponse} from '@angular/common/module.d-CnjH8Dlt';
+import {Category} from '../model/category';
 
 @Component({
   selector: "app-product",
@@ -17,7 +18,7 @@ export class ProductComponent implements OnInit{
     description: '',
     price: 0,
     quantityInStock: 0,
-    category: ''
+    category: {} as Category
   };
 
 

@@ -5,11 +5,14 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let product of products" routerLink="/product-details/{{product.id}}">
+  <tr *ngFor="let product of products">
     <th scope="row">{{ product.id }}</th>
     <td>{{ product.name }}</td>
     <td>{{ product.price }}</td>
-    <td>{{ product.category || 'N/A' }}</td>
+    <td>{{ product.category.categoryName || 'N/A' }}</td>
+    <td><button (click)="productDetails(product.id)">Details</button></td>
+    <td><button (click)="editProduct(product.id)">Edit</button></td>
+    <td><button (click)="deleteProduct(product.id)">Delete</button></td>
   </tr>
   </tbody>
 </table>
